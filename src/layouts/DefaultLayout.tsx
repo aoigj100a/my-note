@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 const DefaultLayout: React.FC = () => {
   return (
@@ -8,9 +8,11 @@ const DefaultLayout: React.FC = () => {
         <h1 className="text-[30px] font-medium">MyNote</h1>
         <div>
           <button className="px-[8px] py-[2px] border rounded mr-[8px]">
-            Dashboard
+            <Link to="/dashboard">Dashboard</Link>
           </button>
-          <button className="px-[8px] py-[2px] border rounded">Todos</button>
+          <button className="px-[8px] py-[2px] border rounded">
+            <Link to="/todo">Todos</Link>
+          </button>
         </div>
       </div>
 
