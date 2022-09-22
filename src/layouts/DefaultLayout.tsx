@@ -4,11 +4,13 @@ import Header from "../components/Header";
 
 const DefaultLayout: React.FC = () => {
   return (
-    <section>
+    <>
+      
       <Header/>
 
       <Outlet />
-    </section>
+
+    </>
   );
 };
 
