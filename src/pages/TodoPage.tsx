@@ -21,11 +21,13 @@ import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 
 import ExportButton from "../features/ExportButton";
 import AddButton from "../features/AddButton";
+import Modal from "../components/Modal";
 
 const TodoPage: React.FC = () => {
   return (
     <>
       <div className="pt-[20px] max-w-[1280px] mx-auto my-0">
+        <Modal>demo</Modal>
         <section className="flex justify-between">
           <AddButton />
           <ExportButton />
