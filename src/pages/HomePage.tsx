@@ -1,11 +1,14 @@
 import React from "react";
+import { useState } from "react";
 import AddButton from "../features/AddButton";
 
 const HomePage: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="max-w-[1200px] mx-auto my-0 pt-[40px]">
       <div className="flex items-center justify-between">
-        <AddButton />
+      <AddButton onClick={() => setIsOpen(true)} />
         <div className="flex flex-col justify-center ml-[8px] px-[8px]  w-[800px] pr-[8px]">
           <div className="w-full flex">
             <div className="w-2/12 flex items-center justify-center bg-gray-200 rounded-l-xl">

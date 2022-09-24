@@ -1,8 +1,8 @@
 import React from "react";
 
-const AddButton = () => {
+const AddButton = ({ onClick }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center" onClick={onClick}>
       <svg
         width="32"
         height="32"

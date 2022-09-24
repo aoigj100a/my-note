@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Table,
   Thead,
@@ -24,12 +25,78 @@ import AddButton from "../features/AddButton";
 import Modal from "../components/Modal";
 
 const TodoPage: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
+      <Modal isOpen={isOpen}>
+        <div className="flex justify-end">
+          <span className="
+          font-medium
+          cursor-pointer 
+          inline-block 
+          bg-gray-200 
+          w-[24px] text-center rounded"
+          onClick={()=>setIsOpen(false)}>X</span>
+        </div>
+
+        <div className="py-12 flex flex-col justify-center items-center">
+          <h2 className="text-2xl font-bold">新增待辦</h2>
+          <div className="mt-8">
+            <div className="grid grid-cols-1 gap-[8px] w-[340px]">
+              <label className="block ">
+                <span className="text-gray-700">標題</span>
+                <input
+                  type="text"
+                  className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    bg-gray-100
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-gray-700">時間</span>
+                <input
+                  type="date"
+                  className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    bg-gray-100
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                />
+              </label>
+              <label className="block">
+                <span className="text-gray-700">詳情描述</span>
+                <textarea
+                  className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    bg-gray-100
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                  rows={3}
+                  defaultValue={""}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <div className="pt-[20px] max-w-[1280px] mx-auto my-0">
-        <Modal>demo</Modal>
         <section className="flex justify-between">
-          <AddButton />
+          <AddButton onClick={() => setIsOpen(true)} />
           <ExportButton />
         </section>
       </div>
