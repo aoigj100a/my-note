@@ -28,9 +28,9 @@ import Modal from "../components/Modal";
 const TodoPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState<any>(() => [
-    { time: "2018-07-22", title: "購物", info: "日用品" },
-    { time: "2022-09-15", title: "鐵人賽", info: "day-10" },
-    { time: "2022-09-25", title: "摺棉被", info: "" },
+    { time: "2018-07-22", title: "購物", info: "日用品", checked: false },
+    { time: "2022-09-15", title: "鐵人賽", info: "day-10", checked: true },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
   ]);
   const {
     register,
@@ -43,7 +43,7 @@ const TodoPage: React.FC = () => {
   const onSubmit = (data) => {
     setList([...list, data]);
     if (isOpen) setIsOpen(false);
-    reset()
+    reset();
     console.log("list", list);
   };
 
@@ -209,7 +209,7 @@ const TodoPage: React.FC = () => {
               {list.map((i, key) => (
                 <Tr key={key}>
                   <Td>
-                    <Checkbox />
+                    <Checkbox isChecked={i.checked} />
                   </Td>
                   <Td>{i.title}</Td>
                   <Td>{i.info}</Td>
