@@ -36,12 +36,14 @@ const TodoPage: React.FC = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     setList([...list, data]);
     if (isOpen) setIsOpen(false);
+    reset()
     console.log("list", list);
   };
 
