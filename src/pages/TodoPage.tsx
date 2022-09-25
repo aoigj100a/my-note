@@ -41,6 +41,7 @@ const TodoPage: React.FC = () => {
 
   const onSubmit = (data) => {
     setList([...list, data]);
+    if (isOpen) setIsOpen(false);
     console.log("list", list);
   };
 
