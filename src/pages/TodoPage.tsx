@@ -19,6 +19,7 @@ import {
   NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 
 import ExportButton from "../features/ExportButton";
 import AddButton from "../features/AddButton";
@@ -26,28 +27,48 @@ import Modal from "../components/Modal";
 
 const TodoPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [list, setList] = useState<any>(() => [
+    { title: "角娘頭像", time: "2018-07-22", info: "一張圖" },
+  ]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    setList([...list, data]);
+    console.log("list", list);
+  };
+
   return (
     <>
       <Modal isOpen={isOpen}>
         <div className="flex justify-end">
-          <span className="
+          <span
+            className="
           font-medium
           cursor-pointer 
           inline-block 
           bg-gray-200 
           w-[24px] text-center rounded"
-          onClick={()=>setIsOpen(false)}>X</span>
+            onClick={() => setIsOpen(false)}
+          >
+            X
+          </span>
         </div>
 
         <div className="py-12 flex flex-col justify-center items-center">
           <h2 className="text-2xl font-bold">新增待辦</h2>
           <div className="mt-8">
-            <div className="grid grid-cols-1 gap-[8px] w-[340px]">
-              <label className="block ">
-                <span className="text-gray-700">標題</span>
-                <input
-                  type="text"
-                  className="
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-1 gap-[8px] w-[340px]">
+                <label className="block ">
+                  <span className="text-gray-700">標題</span>
+                  <input
+                    type="text"
+                    className="
                     mt-1
                     block
                     w-full
@@ -56,14 +77,15 @@ const TodoPage: React.FC = () => {
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                />
-              </label>
+                    {...register("title", { required: true })}
+                  />
+                </label>
 
-              <label className="block">
-                <span className="text-gray-700">時間</span>
-                <input
-                  type="date"
-                  className="
+                <label className="block">
+                  <span className="text-gray-700">時間</span>
+                  <input
+                    type="date"
+                    className="
                     mt-1
                     block
                     w-full
@@ -72,12 +94,14 @@ const TodoPage: React.FC = () => {
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                />
-              </label>
-              <label className="block">
-                <span className="text-gray-700">詳情描述</span>
-                <textarea
-                  className="
+                    {...register("time")}
+                    value="2018-07-22"
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-gray-700">詳情描述</span>
+                  <textarea
+                    className="
                     mt-1
                     block
                     w-full
@@ -86,11 +110,27 @@ const TodoPage: React.FC = () => {
                     border-transparent
                     focus:border-gray-500 focus:bg-white focus:ring-0
                   "
-                  rows={3}
-                  defaultValue={""}
-                />
-              </label>
-            </div>
+                    rows={3}
+                    {...register("info")}
+                  />
+                </label>
+                <label className="flex justify-center items-center">
+                  <input
+                    type="submit"
+                    className="
+                    mt-1
+                    block
+                    w-full py-[4px]
+                    cursor-pointer
+                    rounded-md
+                    bg-gray-300
+                    border-transparent
+                    focus:border-gray-500 focus:bg-white focus:ring-0
+                  "
+                  />
+                </label>
+              </div>
+            </form>
           </div>
         </div>
       </Modal>
