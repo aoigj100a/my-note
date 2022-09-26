@@ -1,14 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useMemo, HTMLProps, useRef, useEffect } from "react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
 import {
@@ -18,8 +16,13 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  flexRender,
+} from "@tanstack/react-table";
 
 import ExportButton from "../features/ExportButton";
 import AddButton from "../features/AddButton";
@@ -32,6 +35,43 @@ const TodoPage: React.FC = () => {
     { time: "2022-09-15", title: "鐵人賽", info: "day-10", checked: true },
     { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
   ]);
+  const [rowSelection, setRowSelection] = useState({});
+  const [data, setData] = useState(() => [...list]);
+
+  useEffect(() => setData([...list]), [list]);
+
+  const columns = useMemo(
+    () => [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <IndeterminateCheckbox
+            className="form-input border-[2px] rounded border-gray-300 w-[20px] h-[20px]"
+            {...{
+              checked: table.getIsAllRowsSelected(),
+              indeterminate: table.getIsSomeRowsSelected(),
+              onChange: table.getToggleAllRowsSelectedHandler(),
+            }}
+          />
+        ),
+        cell: ({ row }) => (
+          <div className="px-1">
+            <IndeterminateCheckbox
+              className="form-input border-[2px] rounded border-gray-300 w-[20px] h-[20px]"
+              {...{
+                checked: row.getIsSelected(),
+                indeterminate: row.getIsSomeSelected(),
+                onChange: row.getToggleSelectedHandler(),
+              }}
+            />
+          </div>
+        ),
+      },
+      { header: "任務標題", accessorKey: "title" },
+      { header: "詳情", accessorKey: "info" },
+    ],
+    []
+  );
   const {
     register,
     handleSubmit,
@@ -39,6 +79,40 @@ const TodoPage: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  function IndeterminateCheckbox({
+    indeterminate,
+    className = "",
+    ...rest
+  }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
+    const ref = useRef<HTMLInputElement>(null!);
+
+    useEffect(() => {
+      if (typeof indeterminate === "boolean") {
+        ref.current.indeterminate = !rest.checked && indeterminate;
+      }
+    }, [ref, indeterminate]);
+
+    return (
+      <input
+        type="checkbox"
+        ref={ref}
+        className={className + " cursor-pointer"}
+        {...rest}
+      />
+    );
+  }
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      rowSelection,
+    },
+    onRowSelectionChange: setRowSelection,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
 
   const onSubmit = (data) => {
     setList([...list, data]);
@@ -196,53 +270,32 @@ const TodoPage: React.FC = () => {
         <TableContainer className="m-2">
           <Table variant="striped">
             <Thead>
-              <Tr>
-                <Th>
-                  <Checkbox />
-                </Th>
-                <Th>任務標題</Th>
-                <Th>詳情</Th>
-                <Th>操作</Th>
-              </Tr>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Tr>
+                  {headerGroup.headers.map((header) => (
+                    <Th>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </Th>
+                  ))}
+                </Tr>
+              ))}
             </Thead>
             <Tbody>
-              {list.map((i, key) => (
-                <Tr key={key}>
-                  <Td>
-                    <Checkbox isChecked={i.checked} />
-                  </Td>
-                  <Td>{i.title}</Td>
-                  <Td>{i.info}</Td>
-                  <Td className="flex items-center">
-                    <span>
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 30 30"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3.75 21.825V25.625C3.75 25.975 4.025 26.25 4.375 26.25H8.175C8.3375 26.25 8.5 26.1875 8.6125 26.0625L22.2625 12.425L17.575 7.73748L3.9375 21.375C3.8125 21.5 3.75 21.65 3.75 21.825V21.825ZM25.8875 8.79998C26.375 8.31248 26.375 7.52498 25.8875 7.03748L22.9625 4.11248C22.475 3.62498 21.6875 3.62498 21.2 4.11248L18.9125 6.39998L23.6 11.0875L25.8875 8.79998Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </span>
-                    <span>
-                      <svg
-                        width="25"
-                        height="25"
-                        viewBox="0 0 30 30"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M8.39946 24.6985C8.39946 26.0848 9.53373 27.2191 10.9201 27.2191H21.0024C22.3888 27.2191 23.523 26.0848 23.523 24.6985V9.57494H8.39946V24.6985ZM11.4998 15.7252L13.2768 13.9482L15.9612 16.62L18.6331 13.9482L20.4101 15.7252L17.7383 18.397L20.4101 21.0689L18.6331 22.8459L15.9612 20.174L13.2894 22.8459L11.5124 21.0689L14.1842 18.397L11.4998 15.7252ZM20.3723 5.79404L19.112 4.53374H12.8105L11.5502 5.79404H7.13916V8.31464H24.7833V5.79404H20.3723Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </span>
-                  </Td>
+              {table.getRowModel().rows.map((row) => (
+                <Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Td>
+                  ))}
                 </Tr>
               ))}
             </Tbody>
