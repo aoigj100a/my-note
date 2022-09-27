@@ -1,6 +1,6 @@
 import React from "react";
 import DefaultLayout from "./layouts/DefaultLayout";
-import TodoPage from "./pages/TodoPage";
+import TodoPage from "./pages/todo/TodoPage";
 import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
 import { Routes, Route } from "react-router-dom";

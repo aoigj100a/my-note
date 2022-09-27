@@ -24,9 +24,9 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
-import ExportButton from "../features/ExportButton";
-import AddButton from "../features/AddButton";
-import Modal from "../components/Modal";
+import ExportButton from "../../features/ExportButton";
+import AddButton from "../../features/AddButton";
+import Modal from "../../components/Modal";
 
 const TodoPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
