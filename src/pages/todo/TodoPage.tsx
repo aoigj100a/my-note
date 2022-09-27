@@ -22,6 +22,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   flexRender,
+  SortingState,
 } from "@tanstack/react-table";
 
 import ExportButton from "../../features/ExportButton";
@@ -36,6 +37,8 @@ const TodoPage: React.FC = () => {
     { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
   ]);
   const [rowSelection, setRowSelection] = useState({});
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const [data, setData] = useState(() => [...list]);
 
   useEffect(() => setData([...list]), [list]);
@@ -109,7 +112,9 @@ const TodoPage: React.FC = () => {
     columns,
     state: {
       rowSelection,
+      sorting,
     },
+    onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -192,13 +197,24 @@ const TodoPage: React.FC = () => {
               {table.getHeaderGroups().map((headerGroup) => (
                 <Tr>
                   {headerGroup.headers.map((header) => (
-                    <Th>
+                    <Th
+                      {...{
+                        className: header.column.getCanSort()
+                          ? "cursor-pointer select-none"
+                          : "",
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                      {{
+                        asc: " 🔼",
+                        desc: " 🔽",
+                      }[header.column.getIsSorted() as string] ?? null}
                     </Th>
                   ))}
                 </Tr>
