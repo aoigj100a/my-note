@@ -67,6 +67,7 @@ const TodoPage: React.FC = () => {
           </div>
         ),
       },
+      { header: "時間", accessorKey: "time" },
       { header: "任務標題", accessorKey: "title" },
       { header: "詳情", accessorKey: "info" },
     ],
