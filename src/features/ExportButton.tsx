@@ -5,8 +5,7 @@ type Props = {
   data: [];
 };
 
-const ExportButton: React.FC<Props> = ({data}) => {
-
+const ExportButton: React.FC<Props> = ({ data }) => {
   return (
     <div className="flex items-center">
       <svg
@@ -21,10 +20,9 @@ const ExportButton: React.FC<Props> = ({data}) => {
           fill="black"
         />
       </svg>
-      <CSVLink data={data}>
+      <CSVLink data={data} filename={"我的待辦清單.csv"}>
         <span className="ml-[8px]">下載報表</span>
       </CSVLink>
-      
     </div>
   );
 };
