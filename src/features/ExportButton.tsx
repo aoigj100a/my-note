@@ -1,6 +1,13 @@
 import React from "react";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const ExportButton = () => {
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  ];
   return (
     <div className="flex items-center">
       <svg
@@ -15,7 +22,10 @@ const ExportButton = () => {
           fill="black"
         />
       </svg>
-      <span className="ml-[8px]">下載報表</span>
+      <CSVLink data={csvData}>
+        <span className="ml-[8px]">下載報表</span>
+      </CSVLink>
+      ;
     </div>
   );
 };
