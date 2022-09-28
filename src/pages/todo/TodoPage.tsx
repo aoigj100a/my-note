@@ -140,7 +140,7 @@ const TodoPage: React.FC = () => {
       <div className="pt-[20px] max-w-[1280px] mx-auto my-0">
         <section className="flex justify-between">
           <AddButton onClick={() => setIsOpen(true)} />
-          <ExportButton />
+          <ExportButton data={list}/>
         </section>
       </div>
       <div className="flex justify-between py-[20px] max-w-[1280px] mx-auto my-0">
