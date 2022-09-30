@@ -23,6 +23,7 @@ import {
   getSortedRowModel,
   flexRender,
   SortingState,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 
 import ExportButton from "../../features/ExportButton";
@@ -34,6 +35,30 @@ const TodoPage: React.FC = () => {
   const [list, setList] = useState<any>(() => [
     { time: "2018-07-22", title: "購物", info: "日用品", checked: false },
     { time: "2022-09-15", title: "鐵人賽", info: "day-10", checked: true },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
+    { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
     { time: "2022-09-25", title: "摺棉被", info: "", checked: false },
   ]);
   const [rowSelection, setRowSelection] = useState({});
@@ -114,6 +139,7 @@ const TodoPage: React.FC = () => {
       rowSelection,
       sorting,
     },
+    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
@@ -140,53 +166,47 @@ const TodoPage: React.FC = () => {
       <div className="pt-[20px] max-w-[1280px] mx-auto my-0">
         <section className="flex justify-between">
           <AddButton onClick={() => setIsOpen(true)} />
-          <ExportButton data={list}/>
+          <ExportButton data={list} />
         </section>
       </div>
+      
       <div className="flex justify-between py-[20px] max-w-[1280px] mx-auto my-0">
         <div className="flex items-center">
           <span>Show rows per page</span>
-          <NumberInput className="w-[80px] ml-[8px]" min={1} max={10} size="sm">
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <select
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => {
+              table.setPageSize(Number(e.target.value));
+            }}
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex items-center">
-          <span>1-8 of 32</span>
+          <span>
+            {" "}
+            {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </span>
           <div className="flex">
-            <span>
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g opacity="0.5">
-                  <path
-                    d="M15.2188 16L18.5188 19.3L17.5762 20.2427L13.3335 16L17.5762 11.7573L18.5188 12.7L15.2188 16Z"
-                    fill="#2D3748"
-                  />
-                </g>
-              </svg>
-            </span>
-            <span>
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16.7814 16L13.4814 12.7L14.4241 11.7573L18.6668 16L14.4241 20.2427L13.4814 19.3L16.7814 16Z"
-                  fill="#2D3748"
-                />
-              </svg>
-            </span>
+            <button
+              className="border rounded p-1"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {"<"}
+            </button>
+            <button
+              className="border rounded p-1"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {">"}
+            </button>
           </div>
         </div>
       </div>
