@@ -9,13 +9,6 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import {
   useReactTable,
@@ -28,6 +21,8 @@ import {
 
 import ExportButton from "../../features/ExportButton";
 import AddButton from "../../features/AddButton";
+import PageChanging from "../../features/PageChanging";
+import Pagination from "../../features/Pagination";
 import TodoModal from "./TodoModal";
 
 const TodoPage: React.FC = () => {
@@ -171,46 +166,8 @@ const TodoPage: React.FC = () => {
       </div>
 
       <div className="flex justify-between py-[20px] max-w-[1280px] mx-auto my-0">
-        <div className="flex items-center">
-          <span>顯示</span>
-          <select
-            className="select w-[80px] h-[40px] mx-[4px] 
-                  rounded border-[2px] border-[#ccc]"
-            value={table.getState().pagination.pageSize}
-            onChange={(e) => {
-              table.setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          <span>頁</span>
-        </div>
-        <div className="flex items-center">
-          <span>
-            共 {table.getState().pagination.pageIndex + 1}頁 第{" "}
-            {table.getPageCount()} 頁
-          </span>
-          <div className="flex">
-            <button
-              className="p-1 mx-[2px]"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<"}
-            </button>
-            <button
-              className="p-1 mx-[2px]"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              {">"}
-            </button>
-          </div>
-        </div>
+        <PageChanging table={table} />
+        <Pagination table={table} />
       </div>
       <div className="max-w-[1280px] mx-auto my-0">
         <TableContainer className="m-2">
