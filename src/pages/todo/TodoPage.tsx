@@ -169,11 +169,12 @@ const TodoPage: React.FC = () => {
           <ExportButton data={list} />
         </section>
       </div>
-      
+
       <div className="flex justify-between py-[20px] max-w-[1280px] mx-auto my-0">
         <div className="flex items-center">
           <span>顯示</span>
-          <select className="select w-[80px] h-[40px] mx-[4px] 
+          <select
+            className="select w-[80px] h-[40px] mx-[4px] 
                   rounded border-[2px] border-[#ccc]"
             value={table.getState().pagination.pageSize}
             onChange={(e) => {
@@ -190,9 +191,8 @@ const TodoPage: React.FC = () => {
         </div>
         <div className="flex items-center">
           <span>
-            {" "}
-            {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
+            共 {table.getState().pagination.pageIndex + 1}頁 第{" "}
+            {table.getPageCount()} 頁
           </span>
           <div className="flex">
             <button
