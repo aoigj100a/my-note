@@ -196,6 +196,7 @@ const TodoPage: React.FC = () => {
                       }[header.column.getIsSorted() as string] ?? null}
                     </Th>
                   ))}
+                  <Th>操作</Th>
                 </Tr>
               ))}
             </Thead>
@@ -210,6 +211,10 @@ const TodoPage: React.FC = () => {
                       )}
                     </Td>
                   ))}
+                  <Td>
+                    <button className="px-[2px]">修改</button>
+                    <button className="px-[2px]">刪除</button>
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
