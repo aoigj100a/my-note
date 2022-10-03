@@ -211,17 +211,19 @@ const TodoPage: React.FC = () => {
                       id={row.id}
                       onClick={(e) => {
                         const id = e.currentTarget.id;
-                        const currentItem = list.filter((i) => i.id === id);
-                        console.log(currentItem)
+                        const currentItem = list[id];
+
                       }}
                     >
                       修改
                     </button>
                     <button
                       className="px-[2px]"
+                      id={row.id}
                       onClick={(e) => {
                         const id = e.currentTarget.id;
-                        const nowList = list.filter((i) => i.id !== id);
+                        const currentItem = list[id];
+                        const nowList = list.filter((i) => i !== currentItem);
                         setList(nowList);
                       }}
                     >
