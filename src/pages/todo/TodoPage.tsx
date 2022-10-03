@@ -29,21 +29,21 @@ const TodoPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState<any>(() => [
     {
-      id: "1",
+      id: "0",
       time: "2018-07-22",
       title: "購物",
       info: "日用品",
       checked: false,
     },
     {
-      id: "2",
+      id: "1",
       time: "2022-09-15",
       title: "鐵人賽",
       info: "day-10",
       checked: true,
     },
     {
-      id: "3",
+      id: "2",
       time: "2022-09-25",
       title: "摺棉被",
       info: "早上就是要摺棉被",
@@ -206,8 +206,27 @@ const TodoPage: React.FC = () => {
                     </Td>
                   ))}
                   <Td>
-                    <button className="px-[2px]">修改</button>
-                    <button className="px-[2px]">刪除</button>
+                    <button
+                      className="px-[2px]"
+                      id={row.id}
+                      onClick={(e) => {
+                        const id = e.currentTarget.id;
+                        const currentItem = list.filter((i) => i.id === id);
+                        console.log(currentItem)
+                      }}
+                    >
+                      修改
+                    </button>
+                    <button
+                      className="px-[2px]"
+                      onClick={(e) => {
+                        const id = e.currentTarget.id;
+                        const nowList = list.filter((i) => i.id !== id);
+                        setList(nowList);
+                      }}
+                    >
+                      刪除
+                    </button>
                   </Td>
                 </Tr>
               ))}
