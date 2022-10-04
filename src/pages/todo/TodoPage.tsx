@@ -25,8 +25,17 @@ import PageChanging from "../../features/PageChanging";
 import Pagination from "../../features/Pagination";
 import TodoModal from "./TodoModal";
 
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import {
+  selectModalIsOpen,
+  openModal,
+  closeModal,
+} from "../../redux/modalSlice/modalSlice";
+
 const TodoPage: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector(selectModalIsOpen);
+  // const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState<any>(() => [
     {
       id: "0",
@@ -137,7 +146,7 @@ const TodoPage: React.FC = () => {
 
   const onSubmit = (data) => {
     setList([...list, data]);
-    if (isOpen) setIsOpen(false);
+    if (isOpen) dispatch(closeModal());
     reset();
     console.log("list", list);
   };
@@ -146,7 +155,7 @@ const TodoPage: React.FC = () => {
     <>
       <TodoModal
         isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        closeModal={() => dispatch(closeModal())}
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
@@ -154,7 +163,7 @@ const TodoPage: React.FC = () => {
       />
       <div className="pt-[20px] max-w-[1280px] mx-auto my-0">
         <section className="flex justify-between">
-          <AddButton onClick={() => setIsOpen(true)} />
+          <AddButton onClick={() => dispatch(openModal())} />
           <ExportButton data={list} />
         </section>
       </div>
@@ -212,7 +221,6 @@ const TodoPage: React.FC = () => {
                       onClick={(e) => {
                         const id = e.currentTarget.id;
                         const currentItem = list[id];
-
                       }}
                     >
                       修改

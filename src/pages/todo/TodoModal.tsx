@@ -3,7 +3,7 @@ import Modal from "../../components/Modal";
 
 type Props = {
   isOpen?;
-  setIsOpen;
+  closeModal;
   onSubmit;
   register;
   handleSubmit;
@@ -12,7 +12,7 @@ type Props = {
 
 const TodoModal: React.FC<Props> = ({
   isOpen,
-  setIsOpen,
+  closeModal,
   onSubmit,
   register,
   handleSubmit,
@@ -28,7 +28,7 @@ const TodoModal: React.FC<Props> = ({
           inline-block 
           bg-gray-200 
           w-[24px] text-center rounded"
-          onClick={() => setIsOpen(false)}
+          onClick={closeModal}
         >
           X
         </span>
