@@ -32,15 +32,12 @@ const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
-    //     openModal: (state: ModalState, action: PayloadAction) => {
-    //       state.isOpen = true;
-    //     },
-    //     closeModal: (state: ModalState, action: PayloadAction) => {
-    //       state.isOpen = false;
-    //     },
+    addTodo: (state: TodoState, action: PayloadAction<[]>) => {
+      state.list = [...state.list, action.payload];
+    },
   },
 });
 
-// export const { openModal, closeModal } = modalSlice.actions;
+export const { addTodo } = todoSlice.actions;
 export const selectList = (state: RootState) => state.todoSlice.list;
 export default todoSlice.reducer;

@@ -31,37 +31,14 @@ import {
   openModal,
   closeModal,
 } from "../../redux/modalSlice/modalSlice";
-import { selectList } from "../../redux/todoSlice/todoSlice";
+import { selectList, addTodo } from "../../redux/todoSlice/todoSlice";
 
 const TodoPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(selectModalIsOpen);
   const list = useAppSelector(selectList);
 
-  console.log(list)
-  // const [list, setList] = useState<any>(() => [
-  //   {
-  //     id: "0",
-  //     time: "2018-07-22",
-  //     title: "購物",
-  //     info: "日用品",
-  //     checked: false,
-  //   },
-  //   {
-  //     id: "1",
-  //     time: "2022-09-15",
-  //     title: "鐵人賽",
-  //     info: "day-10",
-  //     checked: true,
-  //   },
-  //   {
-  //     id: "2",
-  //     time: "2022-09-25",
-  //     title: "摺棉被",
-  //     info: "早上就是要摺棉被",
-  //     checked: false,
-  //   },
-  // ]);
+  // console.log(list);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -149,6 +126,7 @@ const TodoPage: React.FC = () => {
 
   const onSubmit = (data) => {
     // setList([...list, data]);
+    dispatch(addTodo(data));
     if (isOpen) dispatch(closeModal());
     reset();
     console.log("list", list);
