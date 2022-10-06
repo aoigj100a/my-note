@@ -4,11 +4,14 @@ import AddButton from "../features/AddButton";
 
 const HomePage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  // TODO 彈跳視窗
+  // TODO 加入 list
+  // TODO 把一個 todo 放到釘選位置
+  // TODO 思考要釘選哪一種 todo
   return (
     <section className="max-w-[1200px] mx-auto my-0 pt-[40px]">
       <div className="flex items-center justify-between">
-      <AddButton onClick={() => setIsOpen(true)} />
+        <AddButton onClick={() => setIsOpen(true)} />
         <div className="flex flex-col justify-center ml-[8px] px-[8px]  w-[800px] pr-[8px]">
           <div className="w-full flex">
             <div className="w-2/12 flex items-center justify-center bg-gray-200 rounded-l-xl">
@@ -23,9 +26,15 @@ const HomePage: React.FC = () => {
       </div>
       <div className="pt-[20px]">
         <ul className="flex justify-between">
-          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">鐵櫃</li>
-          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">書櫃</li>
-          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">桌子</li>
+          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">
+            鐵櫃
+          </li>
+          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">
+            書櫃
+          </li>
+          <li className="p-[8px] mr-[16px] h-[600px] w-[450px] bg-gray-300">
+            桌子
+          </li>
           <li className="p-[8px] h-[600px] w-[450px] bg-gray-300">冰箱</li>
         </ul>
       </div>

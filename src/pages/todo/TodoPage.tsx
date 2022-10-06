@@ -44,7 +44,7 @@ const TodoPage: React.FC = () => {
 
   const [data, setData] = useState(() => [...list]);
 
-  // useEffect(() => setData([...list]), [list]);
+  useEffect(() => setData([...list]), [list]);
 
   const columns = useMemo(
     () => [
