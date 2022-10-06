@@ -1,17 +1,32 @@
 import React from "react";
 import { useState } from "react";
 import AddButton from "../features/AddButton";
-
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import {
+  selectModalIsOpen,
+  openModal,
+  closeModal,
+} from "../redux/modalSlice/modalSlice";
+import { selectList, addTodo } from "../redux/todoSlice/todoSlice";
+// TODO 彈跳視窗
+// TODO 加入 list
+// TODO 把一個 todo 放到釘選位置
+// TODO 思考要釘選哪一種 todo
 const HomePage: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  // TODO 彈跳視窗
-  // TODO 加入 list
-  // TODO 把一個 todo 放到釘選位置
-  // TODO 思考要釘選哪一種 todo
+
+  const dispatch = useAppDispatch();
+  // const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useAppSelector(selectModalIsOpen);
+  const list = useAppSelector(selectList);
+
+  console.log("list",list,"isOpen",isOpen)
+
   return (
     <section className="max-w-[1200px] mx-auto my-0 pt-[40px]">
       <div className="flex items-center justify-between">
-        <AddButton onClick={() => setIsOpen(true)} />
+        <AddButton
+        onClick={() => console.log("hi")}
+        />
         <div className="flex flex-col justify-center ml-[8px] px-[8px]  w-[800px] pr-[8px]">
           <div className="w-full flex">
             <div className="w-2/12 flex items-center justify-center bg-gray-200 rounded-l-xl">
