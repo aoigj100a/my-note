@@ -10,15 +10,14 @@ import {
 } from "../../redux/modalSlice/modalSlice";
 import { selectList, addTodo } from "../../redux/todoSlice/todoSlice";
 import { useForm } from "react-hook-form";
-// TODO 彈跳視窗
-// TODO 加入 list
-// TODO 把一個 todo 放到釘選位置
-// TODO 思考要釘選哪一種 todo
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(selectModalIsOpen);
   const list = useAppSelector(selectList);
+
+  const [todo, setTodo] = useState(()=>list[list.length - 1]);
+
   const {
     register,
     handleSubmit,
@@ -54,8 +53,8 @@ const HomePage: React.FC = () => {
                 已釘選
               </div>
               <div className="bg-slate-50 w-full pl-[8px]">
-                <h3 className="">購物清單</h3>
-                <div className="text-sm">買蘋果、口罩、洗衣精</div>
+                <h3 className="">{todo.title}</h3>
+                <div className="text-sm">{todo.info}</div>
               </div>
             </div>
           </div>
