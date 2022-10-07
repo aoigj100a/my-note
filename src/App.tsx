@@ -2,7 +2,7 @@ import React from "react";
 import DefaultLayout from "./layouts/DefaultLayout";
 import TodoPage from "./pages/todo/TodoPage";
 import DashboardPage from "./pages/DashboardPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home/HomePage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {

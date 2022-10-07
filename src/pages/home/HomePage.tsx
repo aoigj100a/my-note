@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import AddButton from "../features/AddButton";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import AddButton from "../../features/AddButton";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import {
   selectModalIsOpen,
   openModal,
   closeModal,
-} from "../redux/modalSlice/modalSlice";
-import { selectList, addTodo } from "../redux/todoSlice/todoSlice";
+} from "../../redux/modalSlice/modalSlice";
+import { selectList, addTodo } from "../../redux/todoSlice/todoSlice";
 // TODO 彈跳視窗
 // TODO 加入 list
 // TODO 把一個 todo 放到釘選位置
